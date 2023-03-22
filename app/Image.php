@@ -12,22 +12,4 @@ class Image extends Model
         'file',
         'enable',
     ];
-
-    public function up()
-    {
-        Schema::create('images', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('file');
-            $table->boolean('enable')->default(false);
-            $table->timestamps();
-
-            $table->index('id');
-        });
-    }
-
-    public function down()
-    {
-        Schema::dropIfExists('images');
-    }
 }
