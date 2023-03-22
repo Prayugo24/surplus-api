@@ -55,5 +55,31 @@ class CategoryController extends Controller
         }
     }
 
+    public function detail($id) {
+        if($id) {
+            $params = [
+                'id'     => $id,
+            ];
+            return CategoryModel::detailData($params);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'ID category harus diisi!',
+            ],401);
+        }
+    }
+
+    public function listData(Request $request) {
+        $req = $request->all();
+        $categoryName = (isset($req['name']) ? $req['name'] : '');
+        $startIndex = (isset($req['start_index']) ? $req['start_index'] : 0);
+        $recordCount = (isset($req['record_count']) ? $req['record_count'] : 10);
+        $params = [
+            'name' => $categoryName,
+            'start_index' => $startIndex,
+            'record_count' => $recordCount
+        ];
+        return CategoryModel::listData($params);
+    }
     
 }
