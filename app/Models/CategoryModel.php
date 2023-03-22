@@ -30,6 +30,24 @@ class CategoryModel extends Model {
                 'message' => 'Failed to save category'
             ];
         }
+    public static function deleteData($params = []) {
+        $id = (isset($params['id']) ? $params['id'] : NULL);
+        
+        $result = Category::findOrFail($id);
+        $result->delete();
+
+        if ($result) {
+            return [
+                'success' => true,
+                'message' => 'Category Delete Succes '
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to Delete category'
+            ];
+        }
+    }
 
     }
 }

@@ -41,6 +41,19 @@ class CategoryController extends Controller
         
     }
 
+    public function delete($id) {
+        if($id) {
+            $params = [
+                'id'     => $id,
+            ];
+            return CategoryModel::deleteData($params);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'ID category harus diisi!',
+            ],401);
+        }
+    }
 
     
 }

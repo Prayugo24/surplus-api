@@ -23,5 +23,6 @@ Route::group(['prefix' => 'v1/categories', 'namespace' => 'V1'], function () use
     Route::get('/', [CategoryController::class, 'List']);
     Route::get('/{id?}',[CategoryController::class, 'Detail'] );
     Route::put('/{id?}', [CategoryController::class, 'update']);
+    Route::get('/{id}',[CategoryController::class, 'detail'] );
     Route::delete('/{id?}',[CategoryController::class, 'delete'] );
 });
