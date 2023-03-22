@@ -13,16 +13,16 @@ class CategoryModel extends Model {
         $enable = (isset($params['enable']) && $params['enable'] == 1) ? true : false; 
 
         
-        $post = Category::create([
+        $result = Category::create([
             'name'     => $name,
             'enable'   => $enable
         ]);
         
 
-        if ($post) {
+        if ($result) {
             return [
                 'success' => true,
-                'data' => $post
+                'data' => $result
             ];
         } else {
             return [
@@ -30,6 +30,31 @@ class CategoryModel extends Model {
                 'message' => 'Failed to save category'
             ];
         }
+    }
+
+    public static function updateData($params =[]) {
+        $id = (isset($params['id']) ? $params['id'] : NULL);
+        $name = (isset($params['name']) ? $params['name'] : NULL);
+        $enable = (isset($params['enable']) && $params['enable'] == 1) ? true : false; 
+
+        $result = Category::whereId($id)->update([
+            'name'     => $name,
+            'enable'   => $enable,
+        ]);
+
+        if ($result) {
+            return [
+                'success' => true,
+                'data' => $result
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to update category'
+            ];
+        }
+    }
+
     public static function deleteData($params = []) {
         $id = (isset($params['id']) ? $params['id'] : NULL);
         

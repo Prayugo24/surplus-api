@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     
-    public function save(Request $request){
+    public function create(Request $request){
         $validator = Validator::make($request->all(), 
             [
                 'name'     => 'required',
@@ -22,7 +22,7 @@ class CategoryController extends Controller
                 'enable.required' => 'Masukka value enable category',
             ]
         );
-
+        
         if($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -40,6 +40,39 @@ class CategoryController extends Controller
         }
         
     }
+
+    public function update (Request $request) {
+        $validator = Validator::make($request->all(), 
+            [
+                'id'       => 'required',
+                'name'     => 'required',
+                'enable'   => 'required',
+            ],
+            [
+                'id.required'      => 'ID category harus diisi!',
+                'name.required' => 'Masukkan name category !',
+                'enable.required' => 'Masukka value enable category',
+            ]
+        );
+        
+        if($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Silahkan Isi Body Yang Kosong',
+                'data'    => $validator->errors()
+            ],401);
+        } else {
+            $params = [
+                'id'     => $request->input('id'),
+                'name'     => $request->input('name'),
+                'enable'   => $request->input('enable')
+            ];
+
+            return CategoryModel::updateData($params);
+        }
+
+    }
+
 
     public function delete($id) {
         if($id) {
@@ -81,5 +114,7 @@ class CategoryController extends Controller
         ];
         return CategoryModel::listData($params);
     }
+
+
     
 }
