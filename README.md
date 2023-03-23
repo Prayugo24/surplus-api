@@ -99,10 +99,12 @@ DELETE http://127.0.0.1:8000/api/v1/categories/{id}
 GET http://127.0.0.1:8000/api/v1/categories/?start_index=0&record_count=10&name={text}&enable={boolean}
 ```
 - Parameter query:
--- enable (opsional): Menyaring category berdasarkan status 
--- name (opsional): Menyaring category berdasarkan name
--- start_index: Parameter ini menentukan indeks awal data yang ingin ditampilkan. Jadi, jika kita ingin menampilkan data mulai dari indeks ke-0, maka nilainya harus diatur menjadi 0.
--- record_count: Parameter ini menentukan jumlah data maksimum yang ingin ditampilkan. Jadi, jika kita ingin menampilkan maksimal 10 data, maka nilainya harus diatur menjadi 10.
+```bash
+- enable (opsional): Menyaring category berdasarkan status 
+- name (opsional): Menyaring category berdasarkan name
+- start_index: Parameter ini menentukan indeks awal data yang ingin ditampilkan. Jadi, jika kita ingin menampilkan data mulai dari indeks ke-0, maka nilainya harus diatur menjadi 0.
+- record_count: Parameter ini menentukan jumlah data maksimum yang ingin ditampilkan. Jadi, jika kita ingin menampilkan maksimal 10 data, maka nilainya harus diatur menjadi 10.
+```
 
 - Screenshot
 
@@ -176,14 +178,15 @@ GET http://127.0.0.1:8000/api/v1/products/{id}
 
 - ### Mendapatkan semua product
 ```bash
-GET http://127.0.0.1:8000/api/v1/products?name=test&start_index=0&record_count=10&enable=false
+GET http://127.0.0.1:8000/api/v1/products?name={text}&start_index=0&record_count=10&enable={boolean}
 ```
 - Parameter query:
--- enable (opsional): Menyaring product berdasarkan status 
--- name (opsional): Menyaring product berdasarkan name
--- start_index: Parameter ini menentukan indeks awal data yang ingin ditampilkan. Jadi, jika kita ingin menampilkan data mulai dari indeks ke-0, maka nilainya harus diatur menjadi 0.
--- record_count: Parameter ini menentukan jumlah data maksimum yang ingin ditampilkan. Jadi, jika kita ingin menampilkan maksimal 10 data, maka nilainya harus diatur menjadi 10.
-
+```bash
+- enable (opsional): Menyaring product berdasarkan status 
+- name (opsional): Menyaring product berdasarkan name
+- start_index: Parameter ini menentukan indeks awal data yang ingin ditampilkan. Jadi, jika kita ingin menampilkan data mulai dari indeks ke-0, maka nilainya harus diatur menjadi 0.
+- record_count: Parameter ini menentukan jumlah data maksimum yang ingin ditampilkan. Jadi, jika kita ingin menampilkan maksimal 10 data, maka nilainya harus diatur menjadi 10.
+```
 
 - Screenshot
 
