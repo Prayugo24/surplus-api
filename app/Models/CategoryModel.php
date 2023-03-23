@@ -7,17 +7,16 @@ use App\Category;
 
 class CategoryModel extends Model {
 
-    
+
     public static function saveData($params =[]) {
         $name = (isset($params['name']) ? $params['name'] : NULL);
-        $enable = (isset($params['enable']) && $params['enable'] == 1) ? true : false; 
+        $enable = (isset($params['enable'])) ? filter_var($params['enable'], FILTER_VALIDATE_BOOLEAN) : FALSE ;
 
-        
         $result = Category::create([
             'name'     => $name,
             'enable'   => $enable
         ]);
-        
+
 
         if ($result) {
             return [
@@ -35,7 +34,7 @@ class CategoryModel extends Model {
     public static function updateData($params =[]) {
         $id = (isset($params['id']) ? $params['id'] : NULL);
         $name = (isset($params['name']) ? $params['name'] : NULL);
-        $enable = (isset($params['enable']) && $params['enable'] == 1) ? true : false; 
+        $enable = (isset($params['enable'])) ? filter_var($params['enable'], FILTER_VALIDATE_BOOLEAN) : FALSE ;
 
         $result = Category::whereId($id)->update([
             'name'     => $name,
@@ -57,7 +56,7 @@ class CategoryModel extends Model {
 
     public static function deleteData($params = []) {
         $id = (isset($params['id']) ? $params['id'] : NULL);
-        
+
         $result = Category::findOrFail($id);
         $result->delete();
 
@@ -80,7 +79,7 @@ class CategoryModel extends Model {
         $result = Category::whereId($id)->first();
 
         if ($result) {
-            $result->enable = ($result->enable == 1) ? true : false;
+            $result->enable = (bool) $result->enable;
             return [
                 'success' => true,
                 'message' => 'Data found',
@@ -99,11 +98,17 @@ class CategoryModel extends Model {
         $name = (isset($params['name']) ? $params['name'] : NULL);
         $startIndex = (isset($params['start_index']) ? $params['start_index'] : 0);
         $recordCount = (isset($params['record_count']) ? $params['record_count'] : 10);
+        $enable = (isset($params['enable'])) ? filter_var($params['enable'], FILTER_VALIDATE_BOOLEAN) : null ;
 
         $query = Category::query();
 
         if ($name) {
             $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if($enable !== null) {
+            $enableNumber = intval($enable);
+            $query->where('enable', '=',$enableNumber);
         }
 
         $query->skip($startIndex)->take($recordCount);
@@ -112,7 +117,7 @@ class CategoryModel extends Model {
 
         if ($result->isNotEmpty()) {
             $result->transform(function ($category) {
-                $category->enable = ($category->enable == 1) ? true : false;
+                $category->enable = (bool) $category->enable;
                 return $category;
             });
 

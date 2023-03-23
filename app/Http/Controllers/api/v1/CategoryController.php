@@ -5,24 +5,16 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
+use App\Helpers\Helpers;
 use Illuminate\Support\Facades\Validator;
 
 
 class CategoryController extends Controller
 {
-    
+
     public function create(Request $request){
-        $validator = Validator::make($request->all(), 
-            [
-                'name'     => 'required',
-                'enable'   => 'required',
-            ],
-            [
-                'name.required' => 'Masukkan name category !',
-                'enable.required' => 'Masukka value enable category',
-            ]
-        );
-        
+        $validator = Helpers::validatorCategory($request);
+
         if($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -38,32 +30,21 @@ class CategoryController extends Controller
 
             return CategoryModel::saveData($params);
         }
-        
+
     }
 
-    public function update (Request $request) {
-        $validator = Validator::make($request->all(), 
-            [
-                'id'       => 'required',
-                'name'     => 'required',
-                'enable'   => 'required',
-            ],
-            [
-                'id.required'      => 'ID category harus diisi!',
-                'name.required' => 'Masukkan name category !',
-                'enable.required' => 'Masukka value enable category',
-            ]
-        );
-        
+    public function update ($id ,Request $request) {
+        $validator = Helpers::validatorCategory($request);
+
         if($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Silahkan Isi Body Yang Kosong',
+                'message' => 'Please fill in the empty fields',
                 'data'    => $validator->errors()
             ],401);
         } else {
             $params = [
-                'id'     => $request->input('id'),
+                'id'     => $id,
                 'name'     => $request->input('name'),
                 'enable'   => $request->input('enable')
             ];
@@ -83,7 +64,7 @@ class CategoryController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'ID category harus diisi!',
+                'message' => 'Category ID must be filled in!',
             ],401);
         }
     }
@@ -97,7 +78,7 @@ class CategoryController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'ID category harus diisi!',
+                'message' => 'Category ID must be filled in!',
             ],401);
         }
     }
@@ -107,14 +88,14 @@ class CategoryController extends Controller
         $categoryName = (isset($req['name']) ? $req['name'] : '');
         $startIndex = (isset($req['start_index']) ? $req['start_index'] : 0);
         $recordCount = (isset($req['record_count']) ? $req['record_count'] : 10);
+        $enable = (isset($req['enable'])) ?  filter_var($req['enable'], FILTER_VALIDATE_BOOLEAN) : null ;
         $params = [
             'name' => $categoryName,
+            'enable' => $enable,
             'start_index' => $startIndex,
             'record_count' => $recordCount
         ];
         return CategoryModel::listData($params);
     }
 
-
-    
 }
