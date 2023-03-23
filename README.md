@@ -4,7 +4,7 @@
 Ini adalah API CRUD (Create, Read, Update, Delete) yang memungkinkan pengguna untuk mengelola Produk Kategori dan gambar yang terkait. API ini dibangun menggunakan Laravel dan menggunakan Mysql sebagai database.
 
 ## Persyaratan
-- PHP (versi minimal 7.4)
+- PHP (versi minimal 7.3)
 - Composer
 - Database server MySQL (versi 5.7)
 
