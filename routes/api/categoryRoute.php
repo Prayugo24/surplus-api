@@ -6,7 +6,7 @@ Route::group(['prefix' => 'v1/categories', 'namespace' => 'V1'], function () use
     Route::get('/{id}',[CategoryController::class, 'detail'] );
     Route::get('/', [CategoryController::class, 'listData']);
     Route::post('/', [CategoryController::class, 'create']);
-    Route::put('/', [CategoryController::class, 'update']);
+    Route::post('/{id}', [CategoryController::class, 'update']);
     Route::delete('/{id?}',[CategoryController::class, 'delete'] );
     Route::any('{any}', function(){
         return response()->json([
