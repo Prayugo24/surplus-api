@@ -151,18 +151,21 @@ class ProductModel extends Model {
     }
 
     public static function deleteData($params = []) {
-        $produtcId = (isset($params['id']) ? $params['id'] : NULL);
+        $productId = (isset($params['id']) ? $params['id'] : NULL);
 
         try {
             DB::beginTransaction();
-            $categoryProduct = CategoryProduct::where("product_id",$produtcId);
+            $imageProduct = ImageProduct::where("product_id",$productId);
+            if ($imageProduct->count() > 0) {
+                $imageId = $imageProduct->first()->image_id;
+                $image = Image::where("id",$imageId);
+                $image->delete();
+                $imageProduct->delete();
+            }
+
+            $categoryProduct = CategoryProduct::where("product_id",$productId);
             $categoryProduct->delete();
-            $imageProduct = ImageProduct::where("product_id",$produtcId);
-            $imageId = $imageProduct->first()->image_id;
-            $imageProduct->delete();
-            $image = Image::where("product_id",$produtcId);
-            $image->delete();
-            $product = Product::where("id",$produtcId);
+            $product = Product::where("id",$productId);
             $product->delete();
             DB::commit();
 

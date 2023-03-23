@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class Helpers
 {
